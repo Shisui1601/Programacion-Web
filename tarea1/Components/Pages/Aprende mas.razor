@@ -1,0 +1,39 @@
+﻿@page "/aprende mas"
+@rendermode InteractiveServer
+
+<PageTitle>Aprende mas</PageTitle>
+
+<h1>Aprende más sobre Blazor</h1>
+
+<p>En esta sección encontrarás contenido para aprender más sobre Blazor.</p>
+
+<div class="row">
+    @foreach (var video in Videos)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img class="card-img-top" src="@($"https://img.youtube.com/vi/{video.Url}/hqdefault.jpg")" alt="Video thumbnail">
+                <div class="card-body">
+                    <h5 class="card-title">@video.Titulo</h5>
+                    <a href="@($"https://www.youtube.com/watch?v={video.Url}")" target="_blank" class="btn btn-primary">Ver video</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    class Video{
+        public string? Titulo { get; set; }
+        public string? Url { get; set; }
+    }
+
+    List<Video> Videos = new List<Video>{
+        new Video {Titulo =  "¿Qué es Blazor? Explicación en 10 minutos", Url ="VDkiB5F7FH0"},
+        new Video {Titulo =  "Curso completo de Blazor", Url ="dY_AWdCzsCY"},
+        new Video {Titulo =  "Aplicación CRUD en Blazor usando Entity Framework Core", Url ="0zYdUwhursg"},
+        new Video {Titulo =  "Introducción a Blazor", Url ="7aNq1QZrOLw"},
+        new Video {Titulo =  "Webinar de introducción a Blazor", Url ="6oJLqCH_TzA"}
+    };
+}

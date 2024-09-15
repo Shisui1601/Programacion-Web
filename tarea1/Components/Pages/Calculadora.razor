@@ -1,0 +1,64 @@
+﻿@page "/calculadora"
+@rendermode InteractiveServer
+
+<h3>Calculadora</h3>
+
+<div>
+    <label>Numero 1:</label>
+    <input type="number" @bind-value="num1" @bind-value:event="oninput"/>
+</div>
+
+<div>
+    <label>Numero 2:</label>
+    <input type="number" @bind-value="num2" @bind-value:event="oninput"/>
+</div>
+
+<div style="padding: 5px;">
+    <button class="btn btn-primary" @onclick="Sumar">Sumar</button>
+    <button class="btn btn-success" @onclick="Resta">Restar</button>
+    <button class="btn btn-warning" @onclick="Multiplicar">Multiplicar</button>
+    <button class="btn btn-danger" @onclick="Dividir">Dividir</button>
+</div>
+
+@if (mostrarResultado)
+{
+    <div class="form-control">
+        El resultado es @resultado.ToString("N2")
+    </div>
+}
+
+@code{
+    double num1 = 0, num2 = 0, resultado = 0;
+    bool mostrarResultado = false;
+
+    void Sumar()
+    {
+        resultado = num1 + num2;
+        mostrarResultado = true;
+    }
+
+    void Resta()
+    {
+        resultado = num1 - num2;
+        mostrarResultado = true;
+    }
+
+    void Multiplicar()
+    {
+        resultado = num1 * num2;
+        mostrarResultado = true;
+    }
+
+    void Dividir()
+    {
+        if (num2 != 0)
+        {
+            resultado = num1 / num2;
+        }
+        else
+        {
+            resultado = 0; // Para manejar la división por cero
+        }
+        mostrarResultado = true;
+    }
+}

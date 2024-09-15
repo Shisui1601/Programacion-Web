@@ -1,0 +1,53 @@
+﻿@page "/multiplicar"
+@rendermode InteractiveServer
+
+<h3>Tabla de Multiplicar</h3>
+
+<div>
+    <label>Ingrese un número:</label>
+    <input type="number" @bind="numero" @bind:event="oninput" />
+</div>
+
+<div style="margin-top: 10px;">
+    <button class="btn btn-primary" @onclick="GenerarTabla">Generar Tabla</button>
+</div>
+
+@if (mostrarTabla)
+{
+    <h4>Tabla de multiplicar del @numero:</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Multiplicación</th>
+                <th>Resultado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var valor in tabla)
+            {
+                <tr>
+                    <td>@valor.Multiplicacion</td>
+                    <td>@valor.Resultado</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    int numero = 1;
+    bool mostrarTabla = false;
+
+    List<(string Multiplicacion, int Resultado)> tabla = new List<(string, int)>();
+
+    void GenerarTabla()
+    {
+        tabla.Clear(); // Limpiamos la tabla en cada generación
+        for (int i = 0; i <= 15; i++)
+        {
+            int resultado = numero * i;
+            tabla.Add(($"{numero} x {i}", resultado));
+        }
+        mostrarTabla = true;
+    }
+}

@@ -1,0 +1,51 @@
+﻿@page "/"
+
+@rendermode InteractiveServer
+
+<PageTitle>Inicio</PageTitle>
+
+<style>
+    .container {
+        text-align: center;
+        padding: 50px;
+        background: #f0f8ff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+        background: #e6f7ff;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+        color: #007bff;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        transition: color 0.3s ease;
+    }
+
+    h1:hover {
+        color: #0056b3;
+    }
+
+    p {
+        color: #333;
+        font-size: 1.25rem;
+        line-height: 1.5;
+    }
+
+    .motivational-quote {
+        font-style: italic;
+        color: #555;
+        margin-top: 20px;
+        font-size: 1.2rem;
+    }
+</style>
+
+<div class="container">
+    <h1>¡Bienvenido!</h1>
+    <p>Gracias por visitar mi tarea. Espero que encuentres el contenido útil e interesante.</p>
+    <p class="motivational-quote">Recuerda, "La programación no es solo sobre escribir código, sino sobre resolver problemas y crear soluciones. Cada línea de código que escribes es un paso más hacia convertirte en un mejor solucionador de problemas."</p>
+</div>
