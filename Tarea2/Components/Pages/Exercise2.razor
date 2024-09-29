@@ -1,0 +1,43 @@
+﻿@page "/exercise2"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 2</h3>
+
+<h3>Contador de Dígitos Pares</h3>
+
+<p>Introduce un número:</p>
+<input @bind="numero" type="number" />
+
+<button @onclick="CalcularDigitosPares">Calcular</button>
+
+<p>La cantidad de dígitos pares es: @resultado</p>
+
+@code {
+    public static class DigitoUtils
+    {
+        public static int ContarDigitosPares(int numero)
+        {
+            string numeroStr = Math.Abs(numero).ToString(); 
+            int contadorPares = 0;
+
+            foreach (char digito in numeroStr)
+            {
+                if ((digito - '0') % 2 == 0)
+                {
+                    contadorPares++;
+                }
+            }
+
+            return contadorPares;
+        }
+    }
+
+    private int numero;
+    private int resultado;
+
+    private void CalcularDigitosPares()
+    {
+        resultado = DigitoUtils.ContarDigitosPares(numero);
+    }
+}

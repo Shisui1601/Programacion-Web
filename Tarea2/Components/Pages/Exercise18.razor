@@ -1,0 +1,42 @@
+﻿@page "/exercise18"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 18</h3>
+
+
+<p>Introduce el número de la serie de Fibonacci que deseas obtener:</p>
+<input @bind="n" type="number" />
+
+<button @onclick="CalcularFibonacci">Calcular Fibonacci</button>
+
+<p>El elemento de la serie de Fibonacci es: @resultado</p>
+
+@code {
+    private int n;
+    private int resultado;
+
+    private void CalcularFibonacci()
+    {
+        resultado = ObtenerFibonacci(n);
+    }
+
+    private int ObtenerFibonacci(int n)
+    {
+        if (n < 0) return -1; 
+        if (n == 0) return 0; 
+        if (n == 1) return 1; 
+
+        int a = 0;
+        int b = 1;
+        int siguiente = 0;
+
+        for (int i = 2; i <= n; i++)
+        {
+            siguiente = a + b;
+            a = b;
+            b = siguiente;
+        }
+        return b; 
+    }
+}

@@ -1,0 +1,30 @@
+﻿@page "/exercise4"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 4</h3>
+
+
+<h3>Verificar si el número está entre 1 y 30</h3>
+
+<p>Introduce un número entero:</p>
+<input @bind="numero" type="number" />
+
+<button @onclick="VerificarNumero">Verificar</button>
+
+<p>Resultado: @resultado</p>
+
+@code {
+    private int numero;
+    private int resultado;
+
+    private void VerificarNumero()
+    {
+        resultado = VerificarEntre30(numero);
+    }
+
+    public static int VerificarEntre30(int numero)
+    {
+        return (numero >= 1 && numero <= 30) ? 1 : 0;
+    }
+}

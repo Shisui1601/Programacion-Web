@@ -1,0 +1,58 @@
+﻿@page "/exercise20"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 20</h3>
+
+<p>Introduce 10 números enteros (separados por comas):</p>
+<input @bind="entradaNumeros" type="text" />
+
+<p>Introduce un dígito (0-9):</p>
+<input @bind="digito" type="number" min="0" max="9" />
+
+<button @onclick="CalcularNumerosTerminanEnDigito">Calcular</button>
+
+<p>La cantidad de números que terminan en @digito es: @resultado</p>
+
+@code {
+    private string entradaNumeros;
+    private int digito;
+    private int resultado;
+
+    private void CalcularNumerosTerminanEnDigito()
+    {
+        string[] partes = entradaNumeros.Split(',');
+        int[] numeros = new int[10];
+
+        for (int i = 0; i < partes.Length && i < 10; i++)
+        {
+            if (int.TryParse(partes[i].Trim(), out int numero))
+            {
+                numeros[i] = numero;
+            }
+        }
+
+        resultado = VectorUtils.ContarNumerosTerminanEnDigito(numeros, digito);
+    }
+}
+
+@code {
+    public static class VectorUtils
+{
+    public static int ContarNumerosTerminanEnDigito(int[] numeros, int digito)
+    {
+        int contador = 0;
+
+        foreach (int numero in numeros)
+        {
+            if (numero % 10 == digito)
+            {
+                contador++;
+            }
+        }
+
+        return contador;
+    }
+}
+
+}

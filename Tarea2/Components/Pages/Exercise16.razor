@@ -1,0 +1,38 @@
+﻿@page "/exercise16"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 16</h3>
+
+
+<p>Introduce los 10 números (separados por comas):</p>
+<input @bind="numerosStr" type="text" />
+
+<button @onclick="CalcularPromedio">Calcular Promedio</button>
+
+<p>El promedio es: @resultado</p>
+
+@code {
+    private string numerosStr;
+    private double resultado;
+
+    private void CalcularPromedio()
+    {
+        string[] numerosArray = numerosStr.Split(',');
+        if (numerosArray.Length == 10 && 
+            numerosArray.All(n => int.TryParse(n.Trim(), out _)))
+        {
+            int[] numeros = numerosArray.Select(n => int.Parse(n.Trim())).ToArray();
+            resultado = Promedio(numeros);
+        }
+        else
+        {
+            resultado = double.NaN; 
+        }
+    }
+
+    private double Promedio(int[] numeros)
+    {
+        return numeros.Average();
+    }
+}

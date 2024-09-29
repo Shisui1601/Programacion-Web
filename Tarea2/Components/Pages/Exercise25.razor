@@ -1,0 +1,83 @@
+﻿@page "/exercise25"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+@using System.Collections.Generic;
+
+
+<h3>Ejercicio 25</h3>
+
+<p>Introduce los elementos de la matriz (5 filas, 5 columnas, separados por comas):</p>
+<input @bind="entradaMatriz" type="text" />
+
+<button @onclick="CalcularRepeticionesDeLaModa">Calcular</button>
+
+<p>La cantidad de veces que se repite la moda es: @resultado</p>
+
+@code {
+    private string entradaMatriz;
+    private string resultado;
+
+    private void CalcularRepeticionesDeLaModa()
+    {
+        string[] filas = entradaMatriz.Split(';');
+        int[,] matriz = new int[5, 5];
+
+        for (int i = 0; i < filas.Length && i < 5; i++)
+        {
+            string[] columnas = filas[i].Split(',');
+            for (int j = 0; j < columnas.Length && j < 5; j++)
+            {
+                if (int.TryParse(columnas[j].Trim(), out int valor))
+                {
+                    matriz[i, j] = valor;
+                }
+            }
+        }
+
+        int cantidadRepeticiones = MatrizUtils.CantidadDeRepeticionesDeLaModa(matriz);
+        resultado = $"La moda se repite {cantidadRepeticiones} veces.";
+    }
+}
+
+@code {
+
+public static class MatrizUtils
+{
+    public static int CantidadDeRepeticionesDeLaModa(int[,] matriz)
+    {
+        Dictionary<int, int> frecuencias = new Dictionary<int, int>();
+
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                int valor = matriz[i, j];
+
+                if (frecuencias.ContainsKey(valor))
+                {
+                    frecuencias[valor]++;
+                }
+                else
+                {
+                    frecuencias[valor] = 1;
+                }
+            }
+        }
+
+        int moda = 0;
+        int maxFrecuencia = 0;
+
+        foreach (var par in frecuencias)
+        {
+            if (par.Value > maxFrecuencia)
+            {
+                maxFrecuencia = par.Value;
+                moda = par.Key;
+            }
+        }
+
+        return maxFrecuencia;
+    }
+}
+
+}

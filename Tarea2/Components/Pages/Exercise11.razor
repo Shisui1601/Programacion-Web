@@ -1,0 +1,35 @@
+﻿@page "/exercise11"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 11</h3>
+
+
+<p>Introduce un número:</p>
+<input @bind="numeroStr" type="text" />
+
+<button @onclick="VerificarMultiploDe5">Verificar</button>
+
+<p>El resultado es: @resultado</p>
+
+@code {
+    private string? numeroStr;
+    private int resultado;
+
+    private void VerificarMultiploDe5()
+    {
+        if (int.TryParse(numeroStr, out int numero))
+        {
+            resultado = EsMultiploDe5(numero);
+        }
+        else
+        {
+            resultado = 0; 
+        }
+    }
+
+    private int EsMultiploDe5(int numero)
+    {
+        return numero % 5 == 0 ? 1 : 0;
+    }
+}

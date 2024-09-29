@@ -1,0 +1,31 @@
+﻿@page "/exercise5"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 5</h3>
+
+
+<h3>Obtener el Primer Dígito</h3>
+
+<p>Introduce un número entero:</p>
+<input @bind="numero" type="number" />
+
+<button @onclick="ObtenerPrimerDigito">Obtener Primer Dígito</button>
+
+<p>El primer dígito es: @primerDigito</p>
+
+@code {
+    private int numero;
+    private string? primerDigito;
+
+    private void ObtenerPrimerDigito()
+    {
+        primerDigito = ObtenerPrimerDigitoDeNumero(numero);
+    }
+
+    public static string ObtenerPrimerDigitoDeNumero(int numero)
+    {
+        string numeroStr = Math.Abs(numero).ToString(); 
+        return numeroStr.Length > 0 ? numeroStr[0].ToString() : "No hay dígito";
+    }
+}

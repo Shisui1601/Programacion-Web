@@ -1,0 +1,81 @@
+﻿@page "/exercise22"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 22</h3>
+
+<p>Introduce los elementos de la matriz (3 filas, 4 columnas, separados por comas):</p>
+<input @bind="entradaMatriz" type="text" />
+
+<button @onclick="CalcularRepeticionesMayorPrimo">Calcular</button>
+
+<p>La cantidad de veces que se repite el mayor número primo es: @resultado</p>
+
+@code {
+    private string entradaMatriz;
+    private int resultado;
+
+    private void CalcularRepeticionesMayorPrimo()
+    {
+        string[] filas = entradaMatriz.Split(';');
+        int[,] matriz = new int[3, 4];
+
+        for (int i = 0; i < filas.Length && i < 3; i++)
+        {
+            string[] columnas = filas[i].Split(',');
+            for (int j = 0; j < columnas.Length && j < 4; j++)
+            {
+                if (int.TryParse(columnas[j].Trim(), out int valor))
+                {
+                    matriz[i, j] = valor;
+                }
+            }
+        }
+
+        resultado = MatrizUtils.ContarRepeticionesMayorPrimo(matriz);
+    }
+}
+
+
+@code {
+    public static class MatrizUtils
+{
+    public static int ContarRepeticionesMayorPrimo(int[,] matriz)
+    {
+        int mayorPrimo = -1;
+        int contador = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (EsPrimo(matriz[i, j]))
+                {
+                    if (matriz[i, j] > mayorPrimo)
+                    {
+                        mayorPrimo = matriz[i, j];
+                        contador = 1;
+                    }
+                    else if (matriz[i, j] == mayorPrimo)
+                    {
+                        contador++;
+                    }
+                }
+            }
+        }
+
+        return contador;
+    }
+
+    private static bool EsPrimo(int numero)
+    {
+        if (numero <= 1) return false;
+        for (int i = 2; i <= Math.Sqrt(numero); i++)
+        {
+            if (numero % i == 0) return false;
+        }
+        return true;
+    }
+}
+
+}

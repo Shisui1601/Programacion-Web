@@ -1,0 +1,67 @@
+﻿@page "/exercise21"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 21</h3>
+
+<p>Introduce los elementos de la matriz (3 filas, 4 columnas, separados por comas):</p>
+<input @bind="entradaMatriz" type="text" />
+
+<button @onclick="CalcularRepeticionesMayor">Calcular</button>
+
+<p>La cantidad de veces que se repite el mayor dato es: @resultado</p>
+
+@code {
+    private string entradaMatriz;
+    private int resultado;
+
+    private void CalcularRepeticionesMayor()
+    {
+        string[] filas = entradaMatriz.Split(';');
+        int[,] matriz = new int[3, 4];
+
+        for (int i = 0; i < filas.Length && i < 3; i++)
+        {
+            string[] columnas = filas[i].Split(',');
+            for (int j = 0; j < columnas.Length && j < 4; j++)
+            {
+                if (int.TryParse(columnas[j].Trim(), out int valor))
+                {
+                    matriz[i, j] = valor;
+                }
+            }
+        }
+
+        resultado = MatrizUtils.ContarRepeticionesMayor(matriz);
+    }
+}
+
+@code {
+    public static class MatrizUtils
+{
+    public static int ContarRepeticionesMayor(int[,] matriz)
+    {
+        int mayor = matriz[0, 0];
+        int contador = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (matriz[i, j] > mayor)
+                {
+                    mayor = matriz[i, j];
+                    contador = 1;
+                }
+                else if (matriz[i, j] == mayor)
+                {
+                    contador++;
+                }
+            }
+        }
+
+        return contador;
+    }
+}
+
+}

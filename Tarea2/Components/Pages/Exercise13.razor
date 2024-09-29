@@ -1,0 +1,46 @@
+﻿@page "/exercise13"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 13</h3>
+
+
+<p>Introduce los 10 números (separados por comas):</p>
+<input @bind="numerosStr" type="text" />
+
+<button @onclick="CalcularMayor">Calcular Mayor</button>
+
+<p>El mayor número es: @resultado</p>
+
+@code {
+    private string numerosStr;
+    private int resultado;
+
+    private void CalcularMayor()
+    {
+        string[] numerosArray = numerosStr.Split(',');
+        if (numerosArray.Length == 10 && 
+            numerosArray.All(n => int.TryParse(n.Trim(), out _)))
+        {
+            int[] numeros = numerosArray.Select(n => int.Parse(n.Trim())).ToArray();
+            resultado = EncontrarMayor(numeros);
+        }
+        else
+        {
+            resultado = int.MinValue; 
+        }
+    }
+
+    private int EncontrarMayor(int[] numeros)
+    {
+        int mayor = numeros[0];
+        for (int i = 1; i < numeros.Length; i++)
+        {
+            if (numeros[i] > mayor)
+            {
+                mayor = numeros[i];
+            }
+        }
+        return mayor;
+    }
+}

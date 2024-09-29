@@ -1,0 +1,31 @@
+﻿@page "/exercise1"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 1</h3>
+
+<p>Introduce un número:</p>
+<input @bind="numero" type="number" />
+<button @onclick="MostrarUltimosDosDigitos">Mostrar los dos últimos dígitos</button>
+
+<p>Los dos últimos dígitos son: @ultimosDosDigitos</p>
+
+@code {
+    private string? numero;
+    private string? ultimosDosDigitos;
+
+    private void MostrarUltimosDosDigitos()
+    {
+        ultimosDosDigitos = ObtenerUltimosDosDigitos(numero);
+    }
+
+    public static string ObtenerUltimosDosDigitos(string numero)
+    {
+        if (numero.Length < 2)
+        {
+            return numero;
+        }
+
+        return numero.Substring(numero.Length - 2);
+    }
+}

@@ -1,0 +1,36 @@
+﻿@page "/exercise3"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 3</h3>
+
+<h3>Convertir Código ASCII a Carácter</h3>
+
+<p>Introduce un número entero (código ASCII):</p>
+<input @bind="numeroASCII" type="number" />
+
+<button @onclick="ConvertirACaracter">Convertir</button>
+
+<p>El carácter correspondiente es: @caracter</p>
+
+@code {
+    private int numeroASCII;
+    private string? caracter;
+
+    private void ConvertirACaracter()
+    {
+        caracter = ObtenerCaracter(numeroASCII);
+    }
+
+    public static string ObtenerCaracter(int codigo)
+    {
+        if (codigo >= 0 && codigo <= 127)
+        {
+            return ((char)codigo).ToString(); 
+        }
+        else
+        {
+            return "Código ASCII no válido. Debe estar entre 0 y 127.";
+        }
+    }
+}

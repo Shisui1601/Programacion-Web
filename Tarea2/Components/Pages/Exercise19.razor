@@ -1,0 +1,54 @@
+﻿@page "/exercise19"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 19</h3>
+
+<p>Introduce 10 números enteros (separados por comas):</p>
+<input @bind="entradaNumeros" type="text" />
+
+<button @onclick="CalcularNumerosTerminanEnTres">Calcular</button>
+
+<p>La cantidad de números que terminan en 3 es: @resultado</p>
+
+@code {
+    private string entradaNumeros;
+    private int resultado;
+
+    private void CalcularNumerosTerminanEnTres()
+    {
+        string[] partes = entradaNumeros.Split(',');
+        int[] numeros = new int[10];
+
+        for (int i = 0; i < partes.Length && i < 10; i++)
+        {
+            if (int.TryParse(partes[i].Trim(), out int numero))
+            {
+                numeros[i] = numero;
+            }
+        }
+
+        resultado = VectorUtils.ContarNumerosTerminanEnTres(numeros);
+    }
+}
+
+@code {
+    public static class VectorUtils
+{
+    public static int ContarNumerosTerminanEnTres(int[] numeros)
+    {
+        int contador = 0;
+
+        foreach (int numero in numeros)
+        {
+            if (numero % 10 == 3)
+            {
+                contador++;
+            }
+        }
+
+        return contador;
+    }
+}
+
+}

@@ -1,0 +1,39 @@
+﻿@page "/exercise12"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 12</h3>
+
+
+<p>Introduce el primer número (dos dígitos):</p>
+<input @bind="numero1Str" type="text" />
+
+<p>Introduce el segundo número (dos dígitos):</p>
+<input @bind="numero2Str" type="text" />
+
+<button @onclick="VerificarInversos">Verificar</button>
+
+<p>El resultado es: @resultado</p>
+
+@code {
+    private string? numero1Str;
+    private string? numero2Str;
+    private int resultado;
+
+    private void VerificarInversos()
+    {
+        if (int.TryParse(numero1Str, out int numero1) && int.TryParse(numero2Str, out int numero2))
+        {
+            resultado = SonInversos(numero1, numero2);
+        }
+        else
+        {
+            resultado = 0;
+        }
+    }
+
+    private int SonInversos(int numero1, int numero2)
+    {
+        return (numero1 % 10 == numero2 / 10) && (numero1 / 10 == numero2 % 10) ? 1 : 0;
+    }
+}

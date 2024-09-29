@@ -1,0 +1,74 @@
+﻿@page "/exercise24"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 24</h3>
+
+<p>Introduce los elementos de la matriz (4 filas, 4 columnas, separados por comas):</p>
+<input @bind="entradaMatriz" type="text" />
+
+<button @onclick="CalcularPosicionDelMayorPrimo">Calcular</button>
+
+<p>La posición del mayor número primo es: @resultado</p>
+
+@code {
+    private string entradaMatriz;
+    private string resultado;
+
+    private void CalcularPosicionDelMayorPrimo()
+    {
+        string[] filas = entradaMatriz.Split(';');
+        int[,] matriz = new int[4, 4];
+
+        for (int i = 0; i < filas.Length && i < 4; i++)
+        {
+            string[] columnas = filas[i].Split(',');
+            for (int j = 0; j < columnas.Length && j < 4; j++)
+            {
+                if (int.TryParse(columnas[j].Trim(), out int valor))
+                {
+                    matriz[i, j] = valor;
+                }
+            }
+        }
+
+        var posicion = MatrizUtils.PosicionDelMayorPrimo(matriz);
+        resultado = posicion.fila != -1 ? $"Fila: {posicion.fila}, Columna: {posicion.columna}" : "No hay números primos en la matriz.";
+    }
+}
+
+@code{
+    public static class MatrizUtils
+{
+    public static (int fila, int columna) PosicionDelMayorPrimo(int[,] matriz)
+    {
+        int mayorPrimo = -1;
+        (int fila, int columna) posicionDelMayorPrimo = (-1, -1);
+
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (EsPrimo(matriz[i, j]) && matriz[i, j] > mayorPrimo)
+                {
+                    mayorPrimo = matriz[i, j];
+                    posicionDelMayorPrimo = (i, j);
+                }
+            }
+        }
+
+        return posicionDelMayorPrimo;
+    }
+
+    private static bool EsPrimo(int numero)
+    {
+        if (numero <= 1) return false;
+        for (int i = 2; i <= Math.Sqrt(numero); i++)
+        {
+            if (numero % i == 0) return false;
+        }
+        return true;
+    }
+}
+
+}

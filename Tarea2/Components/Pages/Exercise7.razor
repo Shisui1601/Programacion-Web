@@ -1,0 +1,34 @@
+﻿@page "/exercise7"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 7</h3>
+
+
+<h3>Encontrar el Mayor de Dos Números</h3>
+
+<p>Introduce el primer número entero:</p>
+<input @bind="numero1" type="number" />
+
+<p>Introduce el segundo número entero:</p>
+<input @bind="numero2" type="number" />
+
+<button @onclick="CalcularMayor">Calcular Mayor</button>
+
+<p>El mayor es: @mayor</p>
+
+@code {
+    private int numero1;
+    private int numero2;
+    private int mayor;
+
+    private void CalcularMayor()
+    {
+        mayor = EncontrarMayor(numero1, numero2);
+    }
+
+    public static int EncontrarMayor(int a, int b)
+    {
+        return a > b ? a : b;
+    }
+}

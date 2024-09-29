@@ -1,0 +1,30 @@
+﻿@page "/exercise8"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 8</h3>
+
+
+<h3>Verificar Código ASCII de Letra Minúscula</h3>
+
+<p>Introduce un número entero:</p>
+<input @bind="codigoAscii" type="number" />
+
+<button @onclick="VerificarAscii">Verificar</button>
+
+<p>El resultado es: @resultado</p>
+
+@code {
+    private int codigoAscii;
+    private int resultado;
+
+    private void VerificarAscii()
+    {
+        resultado = EsLetraMinuscula(codigoAscii);
+    }
+
+    public static int EsLetraMinuscula(int codigo)
+    {
+        return (codigo >= 97 && codigo <= 122) ? 1 : 0;
+    }
+}

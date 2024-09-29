@@ -1,0 +1,59 @@
+﻿@page "/exercise14"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 14</h3>
+
+
+<p>Introduce los 10 números (separados por comas):</p>
+<input @bind="numerosStr" type="text" />
+
+<button @onclick="CalcularPrimos">Calcular Primos</button>
+
+<p>La cantidad de números primos es: @resultado</p>
+
+@code {
+    private string numerosStr;
+    private int resultado;
+
+    private void CalcularPrimos()
+    {
+        string[] numerosArray = numerosStr.Split(',');
+        if (numerosArray.Length == 10 && 
+            numerosArray.All(n => int.TryParse(n.Trim(), out _)))
+        {
+            int[] numeros = numerosArray.Select(n => int.Parse(n.Trim())).ToArray();
+            resultado = ContarPrimos(numeros);
+        }
+        else
+        {
+            resultado = -1; 
+        }
+    }
+
+    private int ContarPrimos(int[] numeros)
+    {
+        int contadorPrimos = 0;
+        foreach (int numero in numeros)
+        {
+            if (EsPrimo(numero))
+            {
+                contadorPrimos++;
+            }
+        }
+        return contadorPrimos;
+    }
+
+    private bool EsPrimo(int numero)
+    {
+        if (numero <= 1) return false;
+        for (int i = 2; i <= Math.Sqrt(numero); i++)
+        {
+            if (numero % i == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}

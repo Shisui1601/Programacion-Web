@@ -1,0 +1,37 @@
+﻿@page "/exercise6"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 6</h3>
+
+
+<h3>Verificar si un Dígito está en el Número</h3>
+
+<p>Introduce un número entero:</p>
+<input @bind="numero" type="number" />
+
+<p>Introduce un dígito (0-9):</p>
+<input @bind="digito" type="number" min="0" max="9" />
+
+<button @onclick="VerificarDijitoEnNumero">Verificar</button>
+
+<p>Resultado: @resultado</p>
+
+@code {
+    private int numero;
+    private int digito;
+    private int resultado;
+
+    private void VerificarDijitoEnNumero()
+    {
+        resultado = EstaElDigitoEnNumero(numero, digito);
+    }
+
+    public static int EstaElDigitoEnNumero(int numero, int digito)
+    {
+        string numeroStr = Math.Abs(numero).ToString(); 
+        string digitoStr = digito.ToString();
+
+        return numeroStr.Contains(digitoStr) ? 1 : 0;
+    }
+}

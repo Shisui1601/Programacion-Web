@@ -1,0 +1,49 @@
+﻿@page "/exercise17"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 17</h3>
+
+
+<p>Introduce los 10 números (separados por comas):</p>
+<input @bind="numerosStr" type="text" />
+
+<p>Introduce el número a buscar:</p>
+<input @bind="numeroBuscar" type="number" />
+
+<button @onclick="BuscarNumero">Buscar Número</button>
+
+<p>La posición del número es: @resultado</p>
+
+@code {
+    private string numerosStr;
+    private int numeroBuscar;
+    private int resultado;
+
+    private void BuscarNumero()
+    {
+        string[] numerosArray = numerosStr.Split(',');
+        if (numerosArray.Length == 10 && 
+            numerosArray.All(n => int.TryParse(n.Trim(), out _)))
+        {
+            int[] numeros = numerosArray.Select(n => int.Parse(n.Trim())).ToArray();
+            resultado = BuscarEnVector(numeros, numeroBuscar);
+        }
+        else
+        {
+            resultado = -1; 
+        }
+    }
+
+    private int BuscarEnVector(int[] numeros, int numero)
+    {
+        for (int i = 0; i < numeros.Length; i++)
+        {
+            if (numeros[i] == numero)
+            {
+                return i; 
+            }
+        }
+        return -1; 
+    }
+}

@@ -1,0 +1,42 @@
+﻿@page "/exercise10"
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<h3>Ejercicio 10</h3>
+
+
+<h3>Verificar Dígitos Iguales</h3>
+
+<p>Introduce un número:</p>
+<input @bind="numero" type="number" />
+
+<button @onclick="VerificarDígitosIguales">Verificar</button>
+
+<p>El resultado es: @resultado</p>
+
+@code {
+    private int numero;
+    private int resultado;
+
+    private void VerificarDígitosIguales()
+    {
+        resultado = TodosLosDigitosSonIguales(numero);
+    }
+
+    public static int TodosLosDigitosSonIguales(int numero)
+    {
+        string numeroStr = Math.Abs(numero).ToString();
+        
+        char primerDigito = numeroStr[0];
+
+        foreach (char digito in numeroStr)
+        {
+            if (digito != primerDigito)
+            {
+                return 0; 
+            }
+        }
+
+        return 1;
+    }
+}

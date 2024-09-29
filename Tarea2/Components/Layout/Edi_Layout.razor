@@ -1,0 +1,260 @@
+@inherits LayoutComponentBase
+
+<div class="edi-layout">
+
+    <!-- Menú lateral -->
+    <nav class="sidebar">
+        <div class="menu-header">
+            <h2>
+                <a href="/" class="menu-title">Menú</a>
+            </h2>
+            <a href="/acerca-de" class="acerca-de-link">Acerca de</a>
+        </div>
+
+        <ul>
+            <li>
+                <a href="/exercise1">
+                    <img src="icons/icon1.png" alt="Ejercicio 1" class="menu-icon" />
+                    Ejercicio 1
+                </a>
+            </li>
+            <li>
+                <a href="/exercise2">
+                    <img src="icons/icon2.png" alt="Ejercicio 2" class="menu-icon" />
+                    Ejercicio 2
+                </a>
+            </li>
+            <li>
+                <a href="/exercise3">
+                    <img src="icons/icon3.png" alt="Ejercicio 3" class="menu-icon" />
+                    Ejercicio 3
+                </a>
+            </li>
+            <li>
+                <a href="/exercise4">
+                    <img src="icons/icon4.png" alt="Ejercicio 4" class="menu-icon" />
+                    Ejercicio 4
+                </a>
+            </li>
+            <li>
+                <a href="/exercise5">
+                    <img src="icons/icon5.png" alt="Ejercicio 5" class="menu-icon" />
+                    Ejercicio 5
+                </a>
+            </li>
+            <li>
+                <a href="/exercise6">
+                    <img src="icons/icon6.png" alt="Ejercicio 6" class="menu-icon" />
+                    Ejercicio 6
+                </a>
+            </li>
+            <li>
+                <a href="/exercise7">
+                    <img src="icons/icon7.png" alt="Ejercicio 7" class="menu-icon" />
+                    Ejercicio 7
+                </a>
+            </li>
+            <li>
+                <a href="/exercise8">
+                    <img src="icons/icon8.png" alt="Ejercicio 8" class="menu-icon" />
+                    Ejercicio 8
+                </a>
+            </li>
+            <li>
+                <a href="/exercise9">
+                    <img src="icons/icon9.png" alt="Ejercicio 9" class="menu-icon" />
+                    Ejercicio 9
+                </a>
+            </li>
+            <li>
+                <a href="/exercise10">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 10
+                </a>
+            </li>
+            <li>
+                <a href="/exercise11">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 11
+                </a>
+            </li>
+            <li>
+                <a href="/exercise12">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 12
+                </a>
+            </li>
+            <li>
+                <a href="/exercise13">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 13
+                </a>
+            </li>
+            <li>
+                <a href="/exercise14">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 14
+                </a>
+            </li>
+            <li>
+                <a href="/exercise15">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 15
+                </a>
+            </li>
+            <li>
+                <a href="/exercise16">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 16
+                </a>
+            </li>
+            <li>
+                <a href="/exercise17">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 17
+                </a>
+            </li>
+            <li>
+                <a href="/exercise18">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 18
+                </a>
+            </li>
+            <li>
+                <a href="/exercise19">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 19
+                </a>
+            </li>
+            <li>
+                <a href="/exercise20">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 20
+                </a>
+            </li>
+            <li>
+                <a href="/exercise21">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 21
+                </a>
+            </li>
+            <li>
+                <a href="/exercise22">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 22
+                </a>
+            </li>
+            <li>
+                <a href="/exercise23">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 23
+                </a>
+            </li>
+            <li>
+                <a href="/exercise24">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 24
+                </a>
+            </li>
+            <li>
+                <a href="/exercise25">
+                    <img src="icons/icon10.png" alt="Ejercicio 10" class="menu-icon" />
+                    Ejercicio 25
+                </a>
+            </li>
+            <!-- Agregar más ejercicios aquí -->
+        </ul>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        @Body
+    </div>
+</div>
+
+<style>
+    /* Diseño general */
+    .edi-layout {
+        display: flex;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Menú lateral */
+    .sidebar {
+        width: 250px;
+        background-color: #343a40;
+        color: white;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Ajuste para evitar espacio vacío */
+        min-height: 100vh; /* Asegura que el menú ocupe toda la altura */
+    }
+
+    /* Encabezado del menú que incluye "Menú" y "Acerca de" */
+    .menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    /* Estilo para el enlace "Menú" */
+    .menu-title {
+        color: white;
+        text-decoration: none;
+    }
+
+    /* Estilo para el enlace "Acerca de" */
+    .acerca-de-link {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .acerca-de-link:hover {
+        text-decoration: underline;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0; /* Remover margen para evitar espacio extra */
+        flex-grow: 1; /* Permite que la lista ocupe el espacio restante */
+        overflow-y: auto; /* Agregar desplazamiento si hay muchos ejercicios */
+    }
+
+    .sidebar li {
+        margin: 15px 0;
+    }
+
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .sidebar a:hover {
+        background-color: #495057;
+    }
+
+    .menu-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+
+    /* Contenido principal */
+    .main-content {
+        flex-grow: 1;
+        padding: 20px;
+        background-color: #f8f9fa;
+        overflow-y: auto;
+    }
+</style>
