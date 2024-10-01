@@ -1,0 +1,7 @@
+@using System.Globalization
+<b>$ @Valor.ToString("N2", new CultureInfo("en-US"))</b>
+
+@code{
+    [Parameter]
+    public double Valor { get; set; } = 0;
+}
