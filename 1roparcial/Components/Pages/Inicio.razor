@@ -1,0 +1,92 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject IJSRuntime JSx
+@using System.Text.Json
+
+<PageTitle>Tardanzas registradas</PageTitle>
+
+<h2 class="text-center my-4">Reporte de Tardanzas</h2>
+
+ <div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Tardanzas</h5>
+                    <p class="card-text display-4">@tardanzas.Count</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-center mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Top 3 Estudiantes con más Tardanzas</h5>
+                    <ul class="list-group">
+                        @foreach (var estudiante in topEstudiantes)
+                        {
+                            <li class="list-group-item">@estudiante.Nombre - @estudiante.TotalTardanzas tardanzas</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-center mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Tardanzas por Curso</h5>
+                    <ul class="list-group">
+                        @foreach (var curso in tardanzasPorCurso)
+                        {
+                            <li class="list-group-item">@curso.Curso - @curso.TotalTardanzas tardanzas</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    List<Reporte> tardanzas = new List<Reporte>();
+    List<TardanzaPorEstudiante> topEstudiantes = new List<TardanzaPorEstudiante>();
+    List<TardanzaPorCurso> tardanzasPorCurso = new List<TardanzaPorCurso>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var tardanzasJson = await JSx.InvokeAsync<string>("localStorage.getItem", "tardanzas");
+            if (tardanzasJson != null)
+            {
+                tardanzas = JsonSerializer.Deserialize<List<Reporte>>(tardanzasJson);
+                
+                // Calculamos las estadísticas:
+                topEstudiantes = tardanzas
+                    .GroupBy(t => t.Nombre)  
+                    .Select(g => new TardanzaPorEstudiante
+                    {
+                        Nombre = g.Key,
+                        TotalTardanzas = g.Count()
+                    })
+                    .OrderByDescending(e => e.TotalTardanzas) 
+                    .Take(3) 
+                    .ToList();
+
+                tardanzasPorCurso = tardanzas
+                    .GroupBy(t => t.Curso) 
+                    .Select(g => new TardanzaPorCurso
+                    {
+                        Curso = g.Key,
+                        TotalTardanzas = g.Count()
+                    })
+                    .OrderByDescending(c => c.TotalTardanzas)
+                    .ToList();
+                
+                StateHasChanged();
+            }
+        }
+    }
+}
