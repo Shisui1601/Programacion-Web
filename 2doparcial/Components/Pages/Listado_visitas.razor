@@ -1,0 +1,55 @@
+﻿@page "/listadov"
+@attribute [StreamRendering]
+@using Microsoft.EntityFrameworkCore
+@using RegistroVisitas.Data
+@inject AppDbContext Context
+@inject NavigationManager NavMan
+
+
+<PageTitle>Listado_visitas</PageTitle>
+
+<h3>Listado de Visitas</h3>
+
+@if (visitas == null)
+{
+    <p>Cargando...</p>
+}
+else if (visitas.Count == 0)
+{
+    <p>No hay visitas registradas.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Teléfono</th>
+                <th>Correo Electrónico</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var visita in visitas)
+            {
+                <tr>
+                    <td>@visita.Id</td>
+                    <td>@visita.Nombre</td>
+                    <td>@visita.Apellido</td>
+                    <td>@visita.Telefono</td>
+                    <td>@visita.Correo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Visita> visitas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        visitas = await Context.Visitas.ToListAsync();
+    }
+}

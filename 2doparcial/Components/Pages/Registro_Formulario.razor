@@ -1,0 +1,55 @@
+﻿@page "/formulario"
+@using RegistroVisitas.Data
+@rendermode InteractiveServer
+@inject NavigationManager NavMan
+@inject AppDbContext Context
+
+
+<PageTitle>Registrar_formulario</PageTitle>
+<h3>Registrar Visita</h3>
+
+<EditForm Model="@nuevaVisita" OnValidSubmit="RegistrarVisita">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Nombre:</label>
+        <InputText @bind-Value="@nuevaVisita.Nombre" />
+        <ValidationMessage For="@(() => nuevaVisita.Nombre)" />
+    </div>
+    <div class="mb-3">
+        <label>Apellido:</label>
+        <InputText @bind-Value="@nuevaVisita.Apellido" />
+        <ValidationMessage For="@(() => nuevaVisita.Apellido)" />
+    </div>
+    <div class="mb-3">
+        <label>Teléfono:</label>
+        <InputText @bind-Value="@nuevaVisita.Telefono" />
+        <ValidationMessage For="@(() => nuevaVisita.Telefono)" />
+    </div>
+    <div class="mb-3">
+        <label>Correo Electrónico:</label>
+        <InputText @bind-Value="@nuevaVisita.Correo" />
+        <ValidationMessage For="@(() => nuevaVisita.Correo)" />
+    </div>
+    <div class="text-letf">
+        <button type="submit" class="btn btn-primary">Registrar visita</button>
+    </div>
+</EditForm>
+
+@code {
+    private Visita nuevaVisita = new Visita();
+    private bool mensajeVisible = false;
+    private string mensajeTexto = "";
+
+    private async Task RegistrarVisita()
+    {
+        Context.Visitas.Add(nuevaVisita);
+        await Context.SaveChangesAsync();
+
+        mensajeTexto = "Registro exitoso";
+        mensajeVisible = true;
+
+        nuevaVisita = new Visita(); 
+    }
+}

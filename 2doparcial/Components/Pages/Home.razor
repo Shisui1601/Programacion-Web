@@ -1,0 +1,74 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavMan
+@rendermode InteractiveServer
+
+
+<PageTitle>Inicio</PageTitle>
+
+<h1>Bienvenido al Sistema de Registro de Visitas</h1>
+
+<div class="intro">
+    <p>
+        Este sistema está diseñado para facilitar el registro y la gestión de visitas, permitiendo a los usuarios 
+        llevar un control eficiente de quienes han visitado el lugar. Con una interfaz amigable, puedes registrar 
+        visitas, consultar el historial y obtener reportes de manera rápida y sencilla.
+    </p>
+</div>
+
+<section class="features">
+    <h2>Características Clave</h2>
+    <ul>
+        <li><strong>Registro Rápido:</strong> Agrega nuevas visitas en cuestión de segundos.</li>
+        <li><strong>Listado de Visitas:</strong> Consulta el historial de visitas registradas.</li>
+        <li><strong>Interfaz Intuitiva:</strong> Navegación sencilla y accesible para todos los usuarios.</li>
+        <li><strong>Gestión de Datos:</strong> Control total sobre la información de las visitas.</li>
+    </ul>
+</section>
+
+<section class="cta">
+    <h2>¡Comienza Ahora!</h2>
+    <p>
+        Si estás listo para gestionar tus visitas de forma eficiente, dirígete a la sección de registro o consulta 
+        el listado de visitas.
+    </p>
+    <button @onclick="IrARegistro">Registrar Visita</button>
+</section>
+
+@code {
+    private void IrARegistro()
+    {
+        NavMan.NavigateTo("/formulario");
+    }
+}
+
+<style>
+    .intro {
+        margin: 20px 0;
+        font-size: 1.2rem;
+    }
+    .features {
+        margin: 20px 0;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .cta {
+        margin: 20px 0;
+        text-align: center;
+    }
+    button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+
+
