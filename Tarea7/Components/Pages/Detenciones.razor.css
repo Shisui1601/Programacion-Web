@@ -1,0 +1,60 @@
+/* Estilos generales de la página de inicio */
+.welcome-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.welcome-header h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.welcome-header .lead {
+    font-size: 18px;
+    color: #555;
+}
+
+.welcome-body {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.welcome-body ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.welcome-body li {
+    margin-bottom: 10px;
+}
+
+.welcome-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.welcome-footer .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.welcome-footer .btn:hover {
+    background-color: #0056b3;
+}

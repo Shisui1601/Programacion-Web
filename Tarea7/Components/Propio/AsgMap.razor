@@ -1,0 +1,64 @@
+@using DetencionesDB.Data
+@rendermode InteractiveServer
+@inject IJSRuntime JSX
+
+@code{
+    [Parameter]
+    public List<Detenido> Detenidos { get; set; } = new List<Detenido>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSX.InvokeVoidAsync("cargarMapa");
+
+            var paramx = Newtonsoft.Json.JsonConvert.SerializeObject(Detenidos);
+
+            await JSX.InvokeVoidAsync("cargarMarcadores", paramx);
+        }
+    }
+}
+
+Mapa
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<style>
+    .leaflet-container {
+        height: 400%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100;
+    }
+</style>
+
+<div id="map" style="width: 100%; height: 400px;"></div>
+
+<script>
+    var map = null;
+
+cargarMapa = function() {
+     map = L.map('map').setView([18.88632040635381, -70.18598562430739], 8);
+
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+}
+
+function cargarMarcadores(detenidos){
+        detenidos = JSON.parse(detenidos);
+        for(x=0; x<detenidos.length; x++){
+            detenido = detenidos[x];
+            L.marker([detenido.Latitud, detenido.Longitud]).addTo(map).bindPopup(`
+                <b>Nombre:</b> ${detenido.Nombre} <br>
+                <b>Apellido:</b> ${detenido.Apellido} <br>
+                <b>Pasaporte:</b> ${detenido.NumeroPasaporte} <br>
+                <b>Fecha de nacimiento:</b> ${detenido.FechaNacimiento} <br>
+            `);
+        }
+    }
+</script>

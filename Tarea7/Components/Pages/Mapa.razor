@@ -1,0 +1,16 @@
+@page "/mapa"
+@using DetencionesDB.Data
+@using Microsoft.EntityFrameworkCore
+@inject DetencionesDbContext dbContext
+@rendermode InteractiveServer
+
+<AsgMap Detenidos="detenidos" />
+
+@code{
+    private List<Detenido> detenidos = new List<Detenido>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        detenidos = await dbContext.Detenidos.ToListAsync();
+    }
+}

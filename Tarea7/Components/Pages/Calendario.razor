@@ -1,0 +1,136 @@
+﻿@page "/calendario"
+@using DetencionesDB.Data
+@using Microsoft.EntityFrameworkCore
+@inject DetencionesDbContext dbContext
+@rendermode InteractiveServer
+
+<PageTitle>Calendario de Detenciones</PageTitle>
+<center>
+<h3>Calendario de Detenciones</h3>
+</center>
+
+<!-- Mostrar el Calendario -->
+<div class="calendar-container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Lun</th>
+                <th>Mar</th>
+                <th>Mie</th>
+                <th>Jue</th>
+                <th>Vie</th>
+                <th>Sáb</th>
+                <th>Dom</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var week in calendarWeeks)
+            {
+                <tr>
+                    @foreach (var day in week)
+                    {
+                        <td @onclick="() => ShowDetenidosModal(day)">
+                            @if (day.HasValue)
+                            {
+                                @day.Value.Day
+                                <div class="badge" style="background-color: #FF0000; color: white;">
+                                    @GetDetenidosCount(day.Value)
+                                </div>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal de Detenidos -->
+@if (isModalVisible)
+{
+    <div class="modal" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detenidos</h5>
+                    <button type="button" class="close" @onclick="CloseModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <ul>
+                        @foreach (var item in detenidos)
+                        {
+                            <li>@item.Nombre @item.Apellido - @item.NumeroPasaporte - @item.FechaNacimiento.ToShortDateString()</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<List<DateTime?>> calendarWeeks = new List<List<DateTime?>>();
+    private List<Detenido> detenidos = new List<Detenido>();
+    private bool isModalVisible = false;
+    private DateTime? selectedDate;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var detenidosData = await dbContext.Detenidos.ToListAsync();
+            var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+
+            // Generar el calendario del mes actual
+            calendarWeeks = GenerateCalendar(startOfMonth, endOfMonth);
+            detenidos = detenidosData;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al inicializar los datos: " + ex.Message);
+        }
+    }
+
+    private List<List<DateTime?>> GenerateCalendar(DateTime start, DateTime end)
+    {
+        var weeks = new List<List<DateTime?>>();
+        var currentDay = start.AddDays(-(int)start.DayOfWeek); // Comienza desde el domingo anterior
+
+        while (currentDay <= end)
+        {
+            var week = new List<DateTime?>();
+            for (int i = 0; i < 7; i++)
+            {
+                week.Add(currentDay <= end && currentDay.Month == start.Month ? currentDay : (DateTime?)null);
+                currentDay = currentDay.AddDays(1);
+            }
+            weeks.Add(week);
+        }
+
+        return weeks;
+    }
+
+    private int GetDetenidosCount(DateTime day)
+    {
+        return detenidos.Count(d => d.FechaDetencion.Date == day.Date);
+    }
+
+    private void ShowDetenidosModal(DateTime? day)
+    {
+        if (day.HasValue)
+        {
+            selectedDate = day.Value;
+            detenidos = dbContext.Detenidos.Where(d => d.FechaDetencion.Date == selectedDate.Value.Date).ToList();
+            isModalVisible = true;
+        }
+    }
+
+    private void CloseModal()
+    {
+        isModalVisible = false;
+    }
+}

@@ -1,0 +1,36 @@
+@page "/"
+@using DetencionesDB.Data
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<PageTitle>Bienvenido a Detenciones de Migración</PageTitle>
+
+<div class="welcome-container">
+    <div class="welcome-header">
+        <h1>Bienvenido al Sistema de Detenciones de Migración</h1>
+        <p class="lead">Monitorea y gestiona las detenciones migratorias con facilidad y eficacia.</p>
+    </div>
+
+    <div class="welcome-body">
+        <p>Este programa está diseñado para proporcionar una herramienta eficiente para la administración de las detenciones de migrantes en tiempo real.</p>
+        <p>Con nuestra plataforma, podrás:</p>
+        <ul>
+            <li><strong>Visualizar el calendario de detenciones</strong> para hacer seguimiento de las fechas y lugares de los incidentes.</li>
+            <li><strong>Acceder a los detalles de los detenidos</strong> directamente desde el calendario o mediante la búsqueda avanzada.</li>
+            <li><strong>Gestionar la información</strong> de los detenidos, incluyendo su nombre, número de pasaporte, fecha de nacimiento y otros detalles importantes.</li>
+            <li><strong>Ver informes detallados</strong> sobre las detenciones y su evolución.</li>
+        </ul>
+    </div>
+
+    <div class="welcome-footer">
+        <button class="btn btn-primary" @onclick="NavigateToCalendario">Ir al Calendario</button>
+    </div>
+</div>
+
+@code {
+    private void NavigateToCalendario()
+    {
+        NavigationManager.NavigateTo("/calendario");
+    }
+}
+

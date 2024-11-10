@@ -1,0 +1,140 @@
+@page "/mantenimiento"
+@using DetencionesDB.Data
+@inject DetencionesDbContext dbContext
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+<PageTitle>Mantenimiento</PageTitle>
+
+<h3>Gestión de Detenidos</h3>
+
+<EditForm Model="@detenido" OnValidSubmit="GuardarDetenido">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="row">
+         <div class="col">
+            <div class="mb-3">
+                <label for="nombre">Nombre</label>
+                <InputText id="nombre" class="form-control" @bind-Value="detenido.Nombre" />
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="mb-3">
+                <label for="apellido">Apellido</label>
+                <InputText id="apellido" class="form-control" @bind-Value="detenido.Apellido" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="numeroPasaporte">Número de Pasaporte</label>
+        <InputText id="numeroPasaporte" class="form-control" @bind-Value="detenido.NumeroPasaporte" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+        <InputDate id="fechaNacimiento" class="form-control" @bind-Value="detenido.FechaNacimiento" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaDetencion">Fecha de Detención</label>
+        <InputDate id="fechaDetencion" class="form-control" @bind-Value="detenido.FechaDetencion" />
+    </div>
+
+     <div class="row">
+         <div class="col">
+            <div class="mb-3">
+                   <label for="latitud">Latitud</label>
+                    <InputNumber id="latitud" class="form-control" @bind-Value="detenido.Latitud" />
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="mb-3">
+                <label for="longitud">Longitud</label>
+                <InputNumber id="longitud" class="form-control" @bind-Value="detenido.Longitud" />
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-6">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+</EditForm>
+
+<!-- Tabla de Detenidos -->
+<h3>Lista de Detenidos</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Pasaporte</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Fecha de Detención</th>
+            <th>Coordenadas</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detenido in detenidos)
+        {
+            <tr>
+                <td>@detenido.Nombre</td>
+                <td>@detenido.Apellido</td>
+                <td>@detenido.NumeroPasaporte</td>
+                <td>@detenido.FechaNacimiento.ToShortDateString()</td>
+                <td>@detenido.FechaDetencion.ToShortDateString()</td>
+                <td>@detenido.Latitud, @detenido.Longitud</td>
+                <td>
+                    <button class="btn btn-danger" @onclick="() => EliminarDetenido(detenido.Id)">Eliminar</button>
+                    <button class="btn btn-warning" @onclick="() => EditarDetenido(detenido)">Editar</button>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Detenido> detenidos = new List<Detenido>();
+    private Detenido detenido = new Detenido();
+
+    protected override async Task OnInitializedAsync()
+    {
+        detenidos = await dbContext.Detenidos.ToListAsync();
+    }
+
+    private async Task GuardarDetenido()
+    {
+        if (detenido.Id == 0)
+        {
+            dbContext.Detenidos.Add(detenido);
+        }
+        else
+        {
+            dbContext.Detenidos.Update(detenido);
+        }
+        await dbContext.SaveChangesAsync();
+        await OnInitializedAsync();
+        detenido = new Detenido();  // Reset form
+    }
+
+      private void EditarDetenido(Detenido detenidoAEditar)
+    {
+        detenido = detenidoAEditar;
+    }
+
+    private async Task EliminarDetenido(int id)
+    {
+        var detenidoToDelete = await dbContext.Detenidos.FindAsync(id);
+        if (detenidoToDelete != null)
+        {
+            dbContext.Detenidos.Remove(detenidoToDelete);
+            await dbContext.SaveChangesAsync();
+            await OnInitializedAsync();
+        }
+    }
+}
