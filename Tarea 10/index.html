@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Colores</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>COLORIN COLORADO</h1>
+        
+        <div class="grid" id="colorGrid">
+            <div class="cell">
+                <input type="text" class="colorInput">
+            </div>
+            <div class="cell">
+                <input type="text" class="colorInput">
+            </div>
+            <div class="cell">
+                <input type="text" class="colorInput">
+            </div>
+            <div class="cell">
+                <input type="text" class="colorInput">
+            </div>
+            <div class="cell">
+                <input type="text" class="colorInput">
+            </div>
+            <div class="cell">
+                <input type="text" class="colorInput">
+            </div>
+        </div>
+
+        <button id="saveButton">Guardar</button>
+
+        <div id="colorCount">
+            <h3>Contador de Colores</h3>
+            <p>Rojo: <span id="rojoCount">0</span></p>
+            <p>Verde: <span id="verdeCount">0</span></p>
+            <p>Azul: <span id="azulCount">0</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
